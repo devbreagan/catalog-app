@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -10,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.gbreagan.catalog"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -33,10 +34,10 @@ android {
                 "proguard-rules.pro"
             )
             // Load value from .properties file instead
-            buildConfigField("String", "API_URL", "\"https://www.freetogame.com/api\"")
+            buildConfigField("String", "API_URL", "\"https://www.freetogame.com/api/\"")
         }
         debug {
-            buildConfigField("String", "API_URL", "\"https://www.freetogame.com/api\"")
+            buildConfigField("String", "API_URL", "\"https://www.freetogame.com/api/\"")
 //            buildConfigField("String", "API_URL", "\"http://localhost:3000/api\"")
         }
     }
@@ -51,7 +52,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -70,6 +71,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
 
     implementation(libs.androidx.core.splashscreen)
 
@@ -77,11 +79,16 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.converter.gson)
     implementation(libs.squareup.okhttp3.logging.interceptor)
+    implementation(libs.google.code.gson)
 
     // hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.android.compiler)
+
+    // coil
+    implementation(libs.coil.compose)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
