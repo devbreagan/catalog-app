@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -20,6 +21,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -27,6 +32,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Load value from .properties file instead
+            buildConfigField("String", "API_URL", "\"https://www.freetogame.com/api\"")
+        }
+        debug {
+            buildConfigField("String", "API_URL", "\"https://www.freetogame.com/api\"")
+//            buildConfigField("String", "API_URL", "\"http://localhost:3000/api\"")
         }
     }
     compileOptions {
@@ -61,6 +72,16 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.androidx.core.splashscreen)
+
+    //retrofit
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.gson)
+    implementation(libs.squareup.okhttp3.logging.interceptor)
+
+    // hilt
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.compose)
+    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
