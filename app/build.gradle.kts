@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -74,6 +75,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
 
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.jetbrains.kotlin.serialization)
+    implementation(libs.androidx.navigation.compose)
 
     //retrofit
     implementation(libs.squareup.retrofit)

@@ -4,15 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
+import com.gbreagan.catalog.ui.component.Navigation
 import com.gbreagan.catalog.ui.screen.game.GameScreen
+import com.gbreagan.catalog.ui.screen.main.MainScreen
 import com.gbreagan.catalog.ui.theme.CatalogTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,28 +20,11 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             CatalogTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    GameScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+                Navigation(navController)
+                MainScreen()
+//                GameScreen {}
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CatalogTheme {
-        Greeting("Android")
     }
 }
