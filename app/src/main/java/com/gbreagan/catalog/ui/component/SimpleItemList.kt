@@ -1,32 +1,21 @@
 package com.gbreagan.catalog.ui.component
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import com.gbreagan.catalog.data.model.Game
 
 @Composable
 fun SimpleItemList(
     modifier: Modifier = Modifier,
-    items: List<Item>,
+    items: LazyPagingItems<Game>,
     onItemClick: (Int) -> Unit
 ) {
-    var searchText by remember { mutableStateOf("") }
-
-    val filteredItems = remember(searchText) {
-        if (searchText.isBlank()) items
-        else items.filter { it.title.contains(searchText, ignoreCase = true) }
-    }
-
     Column(modifier = modifier.padding(16.dp)) {
 //        TextField(
 //            enabled = false,
@@ -39,16 +28,30 @@ fun SimpleItemList(
 //            singleLine = true
 //        )
 
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            itemsIndexed(items = items, key = { _, item -> item.id }) { index, item ->
-                SimpleCard(
-                    title = item.title,
-                    description = item.description,
-                    thumbnail = item.thumbnail,
-                    onClick = { onItemClick(item.id) }
-                )
+        LazyColumn {
+
+            items(count = items.itemCount) { index ->
+                val item = items[index]
+                item?.let {
+                    SimpleCard(
+                        title = it.title,
+                        description = it.shortDescription,
+                        thumbnail = it.thumbnail,
+                        onClick = { onItemClick(it.id) }
+                    )
+                }
             }
         }
+//        LazyColumn(modifier = Modifier.fillMaxSize()) {
+//            itemsIndexed(items = items, key = { _, item -> item.id }) { index, item ->
+//                SimpleCard(
+//                    title = item.title,
+//                    description = item.description,
+//                    thumbnail = item.thumbnail,
+//                    onClick = { onItemClick(item.id) }
+//                )
+//            }
+//        }
     }
 }
 

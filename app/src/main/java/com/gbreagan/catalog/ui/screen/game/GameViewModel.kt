@@ -1,34 +1,43 @@
 package com.gbreagan.catalog.ui.screen.game
 
-import android.util.Log
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.gbreagan.catalog.data.model.Game
 import com.gbreagan.catalog.data.repository.GameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
-    private val gameRepository: GameRepository
+    gameRepository: GameRepository
 ) : ViewModel(
 ) {
-    private val _uiState = MutableStateFlow(UiHomeState())
-    val state: StateFlow<UiHomeState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<UiGameState>(UiGameState.Loading)
+    val state: StateFlow<UiGameState> = _uiState.asStateFlow()
 
-    fun loadGames() {
-        Log.d("GameViewModel", "loadGames")
+    val games: Flow<PagingData<Game>> = gameRepository
+        .getPagedGameItems()
+        .cachedIn(viewModelScope)
+
+    init {
+        loadGames()
+    }
+
+    private fun loadGames() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            gameRepository.games().collect { value ->
+            games.collectLatest {
                 _uiState.update {
-                    it.copy(games = value, isLoading = false)
+                    UiGameState.Success
                 }
             }
         }
@@ -36,7 +45,8 @@ class GameViewModel @Inject constructor(
 }
 
 @Stable
-data class UiHomeState(
-    val isLoading: Boolean = false,
-    val games: List<Game> = ArrayList()
-)
+sealed class UiGameState {
+    data object Loading : UiGameState()
+    data object Success : UiGameState()
+    data class Error(val message: String) : UiGameState()
+}

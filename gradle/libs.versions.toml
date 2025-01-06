@@ -20,6 +20,8 @@ navigation = "2.8.0"
 ksp = "1.9.10-1.0.13"
 serialization = "1.6.3"
 constraint-layout-compose = "1.1.0"
+room = "2.6.1"
+paging-compose = "3.3.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,8 +51,12 @@ hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref =
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroid" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 jetbrains-kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
-
+androidx-room-runtime = { group = "androidx.room", name="room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name="room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name="room-compiler", version.ref = "room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 google-code-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

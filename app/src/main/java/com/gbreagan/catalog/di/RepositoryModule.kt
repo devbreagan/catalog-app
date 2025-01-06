@@ -1,15 +1,33 @@
 package com.gbreagan.catalog.di
 
+import com.gbreagan.catalog.data.datasource.local.CatalogDatabase
+import com.gbreagan.catalog.data.datasource.remote.ApiService
 import com.gbreagan.catalog.data.repository.GameRepository
-import com.gbreagan.catalog.data.repository.remote.GameRemoteRepository
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Qualifier
+import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Local
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Remote
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
-    @Binds
-    abstract fun bindGameRepository(gameRepository: GameRemoteRepository) : GameRepository
+object RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideGameRepository(
+        apiService: ApiService,
+        gameDao: CatalogDatabase
+    ): GameRepository {
+        return GameRepository(apiService, gameDao)
+    }
 }

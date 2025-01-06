@@ -93,6 +93,15 @@ dependencies {
     // coil
     implementation(libs.coil.compose)
 
+    // room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    ksp(libs.androidx.room.compiler)
+
+    // paging
+    implementation(libs.androidx.paging.compose)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
