@@ -20,10 +20,8 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             CatalogTheme {
-                val navController = rememberNavController()
-                Navigation(navController)
+                Navigation(rememberNavController())
                 MainScreen()
-//                GameScreen {}
             }
         }
     }

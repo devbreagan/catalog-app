@@ -10,6 +10,6 @@ fun DetailScreen(
     itemId: Int
 ) {
     Surface {
-        Text(text = "Detail")
+        Text(text = "Detail $itemId")
     }
 }

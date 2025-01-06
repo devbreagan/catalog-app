@@ -25,7 +25,7 @@ class GameViewModel @Inject constructor(
     fun loadGames() {
         Log.d("GameViewModel", "loadGames")
         viewModelScope.launch {
-//            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true) }
             gameRepository.games().collect { value ->
                 _uiState.update {
                     it.copy(games = value, isLoading = false)
@@ -37,6 +37,6 @@ class GameViewModel @Inject constructor(
 
 @Stable
 data class UiHomeState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val games: List<Game> = ArrayList()
 )
