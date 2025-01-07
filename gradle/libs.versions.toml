@@ -22,6 +22,9 @@ serialization = "1.6.3"
 constraint-layout-compose = "1.1.0"
 room = "2.6.1"
 paging-compose = "3.3.5"
+kotlinxCoroutinesTest = "1.9.0"
+mockk = "1.13.5"
+pagingCommon = "3.3.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +60,10 @@ androidx-room-compiler = { group = "androidx.room", name="room-compiler", versio
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 google-code-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
+
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

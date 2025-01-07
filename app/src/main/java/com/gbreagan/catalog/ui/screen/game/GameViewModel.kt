@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
-    gameRepository: GameRepository
+    private val gameRepository: GameRepository
 ) : ViewModel(
 ) {
     private val _uiState = MutableStateFlow<UiGameState>(UiGameState.Loading)
@@ -29,15 +29,15 @@ class GameViewModel @Inject constructor(
         .getPagedGameItems()
         .cachedIn(viewModelScope)
 
-    init {
-        loadGames()
-    }
-
-    private fun loadGames() {
+    fun loadGames() {
         viewModelScope.launch {
-            games.collectLatest {
+            games.collectLatest { pagingData ->
                 _uiState.update {
-                    UiGameState.Success
+                    if (pagingData != PagingData.empty<Game>()) {
+                        UiGameState.Success
+                    } else {
+                        UiGameState.Error("No items found")
+                    }
                 }
             }
         }
