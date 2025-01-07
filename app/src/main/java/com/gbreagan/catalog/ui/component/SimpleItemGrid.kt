@@ -1,29 +1,27 @@
 package com.gbreagan.catalog.ui.component
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.gbreagan.catalog.data.model.Game
 
 @Composable
-fun SimpleItemList(
+fun SimpleItemGrid(
     modifier: Modifier = Modifier,
     items: LazyPagingItems<Game>,
     onItemClick: (Int) -> Unit
 ) {
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         modifier = modifier
     ) {
-        items(count = items.itemCount) { index ->
-            val item = items[index]
+        items(items) { item ->
             item?.let {
                 SimpleCard(
-                    modifier = Modifier
-                        .padding(bottom = 16.dp),
                     title = it.title,
                     thumbnail = it.thumbnail,
                     onClick = { onItemClick(it.id) }
@@ -33,7 +31,11 @@ fun SimpleItemList(
     }
 }
 
-@Stable
-data class Item(val id: Int, val title: String, val thumbnail: String, val description: String) {
-    override fun toString(): String = title
+fun <T : Any> LazyGridScope.items(
+    lazyPagingItems: LazyPagingItems<T>,
+    itemContent: @Composable LazyGridItemScope.(value: T?) -> Unit
+) {
+    items(lazyPagingItems.itemCount) { index ->
+        itemContent(lazyPagingItems[index])
+    }
 }

@@ -16,13 +16,13 @@ interface GameDao {
     fun selectAll(): PagingSource<Int, Game>
 
     @Query("SELECT * FROM game WHERE id = :id")
-    suspend fun selectOne(id: Int): Game
+    suspend fun selectById(id: Int): Game
 
     @Query("SELECT * FROM game WHERE title LIKE '%' || :title || '%'")
     suspend fun selectSome(title: String): Game
 
     @Query("SELECT * FROM game WHERE genre = :genre")
-    suspend fun selectByGenre(genre: String): Game
+    suspend fun selectByGenre(genre: String): List<Game>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(game: Game)

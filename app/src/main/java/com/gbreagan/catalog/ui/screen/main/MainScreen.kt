@@ -22,13 +22,16 @@ fun MainScreen() {
                     Text(text = "Games")
                 }
             )
-//            SearchBar("", {}, {}, active = false, onActiveChange = {}) {
+//            SearchBar("", {}, {}, active = false, onActiveChange = {
+//
+//            }) {
 //
 //            }
         }
     ) { innerPadding ->
         Column(
-          modifier = Modifier.padding(innerPadding)
+          modifier = Modifier
+              .padding(innerPadding)
         ) {
             Navigation(navController)
         }

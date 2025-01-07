@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             CatalogTheme {
-                Navigation(rememberNavController())
                 MainScreen()
             }
         }

@@ -6,11 +6,10 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -24,22 +23,20 @@ import coil.request.ImageRequest
 fun SimpleCard(
     modifier: Modifier = Modifier,
     title: String,
-    description: String,
     thumbnail: String,
     onClick:() -> Unit
 ) {
 
-    val showShimmer = remember { mutableStateOf(true) }
+    //val showShimmer = remember { mutableStateOf(true) }
 
     Card(
         modifier = modifier
-
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
             .clickable {
                 onClick()
             },
-        shape = RoundedCornerShape(8.dp)
+        elevation = CardDefaults.cardElevation(1.dp),
+        shape = RoundedCornerShape(0.dp)
     ){
         AsyncImage(
             modifier = Modifier
@@ -62,15 +59,6 @@ fun SimpleCard(
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = description,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Justify,
-            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

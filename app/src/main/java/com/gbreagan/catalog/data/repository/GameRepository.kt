@@ -14,6 +14,7 @@ import com.gbreagan.catalog.data.model.Game
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,10 +24,12 @@ class GameRepository @Inject constructor(
 ) {
     @OptIn(ExperimentalPagingApi::class)
     fun getPagedGameItems(): Flow<PagingData<Game>> = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
         pagingSourceFactory = { database.getGameDao().selectAll() },
         remoteMediator = ItemRemoteMediator(apiService, database),
     ).flow
+
+    suspend fun getGameItem(id: Int): Flow<Game> = flow { emit(database.getGameDao().selectById(id)) }
 }
 
 @OptIn(ExperimentalPagingApi::class)

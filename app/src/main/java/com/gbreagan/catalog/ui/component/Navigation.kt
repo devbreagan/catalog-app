@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.gbreagan.catalog.ui.screen.detail.DetailScreen
 import com.gbreagan.catalog.ui.screen.game.GameScreen
+import com.gbreagan.catalog.ui.screen.main.MainScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -14,7 +15,6 @@ fun Navigation(
     navController: NavHostController
 ) {
     NavHost(navController, startDestination = Screen.Game) {
-
         composable<Screen.Game> {
             GameScreen {
                 navController.navigate(Screen.Detail(it))
