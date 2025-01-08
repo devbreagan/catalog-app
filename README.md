@@ -13,24 +13,28 @@ MVVM(Model View ViewModel) ejemplo en Kotlin usando los componentes : ViewModel,
 
 ### Demo
 
-MVVM + Compose + Hilt + Room
+<img src="kotlinmvvmscreen.gif?raw=true" height="480">
+
+#### MVVM + Compose + Hilt + Room + UnitTest
 
 Se usó Clean Architecture sin capa de dominio debido a simplicidad del requerimineto incial. pero que se puede implementar si se requiriera.
 
-Los datos se almacenan en la primera carga, luego todas las consultas son realizadas a la base de datos local.
-Se usó Paging para realizar el listado inicial en pantalla. Las demás consultas como ver Detalle de un Juego se realiza consultando a la pase de datos y usando UiState del ViewModel
+Los [datos](https://www.freetogame.com/api/games) se almacenan en la primera descarga, luego todas las consultas son realizadas a la base de datos local.
+Se usó Paging para realizar el listado inicial en pantalla logrando una visualización fluida. Las demás consultas como ver Detalle de un Juego se realiza consultando a la pase de datos y usando UiState del ViewModel
 
-
+### Considerations
 Hay varios usos que se pueden dar a este enfoque, por ejemplo puede realizarse un sistema de sincronización bidireccional para mantener actualizada la base de datos remota, aspectos que no cubre este ejemplo, pero que se pueden implementar con facilidad.
 
-<img src="assets/kotlinmvvmscreen.gif?raw=true" height="480">
 
-
+### Instructions
+- Use la rama main o develop
+- Use build variant developDebug
 
 ### Dependencies
 
 - Retrofit 2 [version: '2.11.0'](https://square.github.io/retrofit/)
 - Coil [version: '2.6.0'](https://github.com/coil-kt/coil)
+- and more...
 
 
 ### References
