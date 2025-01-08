@@ -25,6 +25,7 @@ paging-compose = "3.3.5"
 kotlinxCoroutinesTest = "1.9.0"
 mockk = "1.13.5"
 pagingCommon = "3.3.5"
+turbine = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +65,7 @@ androidx-paging-compose = { module = "androidx.paging:paging-compose", version.r
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingCommon" }
+cash-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

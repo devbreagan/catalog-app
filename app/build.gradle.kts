@@ -114,5 +114,7 @@ dependencies {
     testImplementation (libs.mockk)
     testImplementation (libs.kotlinx.coroutines.test)
     testImplementation (libs.androidx.paging.common)
+    testImplementation (libs.cash.turbine)
+
 
 }

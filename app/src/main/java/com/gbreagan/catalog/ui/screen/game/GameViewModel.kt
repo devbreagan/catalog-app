@@ -22,7 +22,10 @@ class GameViewModel @Inject constructor(
     private val gameRepository: GameRepository
 ) : ViewModel(
 ) {
-    private val _uiState = MutableStateFlow<UiGameState>(UiGameState.Loading)
+    private val _uiState: MutableStateFlow<UiGameState> =
+        MutableStateFlow(
+            UiGameState(isLoading = true)
+        )
     val state: StateFlow<UiGameState> = _uiState.asStateFlow()
 
     val games: Flow<PagingData<Game>> = gameRepository
@@ -34,19 +37,52 @@ class GameViewModel @Inject constructor(
             games.collectLatest { pagingData ->
                 _uiState.update {
                     if (pagingData != PagingData.empty<Game>()) {
-                        UiGameState.Success
+                       it.copy(isLoading = false, isMainDataLoaded = true)
                     } else {
-                        UiGameState.Error("No items found")
+                        it.copy(isLoading = false)
                     }
                 }
             }
         }
     }
+
+    fun filterGames(genre: String) {
+        viewModelScope.launch {
+            gameRepository.findItemsByGenre(genre)
+                .collectLatest { genres ->
+                    _uiState.update {
+                        it.copy(gamesFilteredByGenre = genres)
+                    }
+                }
+        }
+    }
+    fun loadGenres() {
+        viewModelScope.launch {
+            gameRepository.findAllGenres()
+                .collectLatest { genres ->
+                    _uiState.update {
+                       it.copy(gameGenres = genres)
+                    }
+                }
+        }
+    }
+
+    fun findGames(title: String) {
+        viewModelScope.launch {
+            gameRepository.findItemsByTitle(title)
+                .collectLatest { genres ->
+                    _uiState.update {
+                        it.copy(gamesFilteredByGenre = genres)
+                    }
+                }
+        }
+    }
 }
 
 @Stable
-sealed class UiGameState {
-    data object Loading : UiGameState()
-    data object Success : UiGameState()
-    data class Error(val message: String) : UiGameState()
-}
+data class UiGameState(
+    val isLoading: Boolean = false,
+    val isMainDataLoaded: Boolean = false,
+    val gameGenres: List<String> = listOf(),
+    val gamesFilteredByGenre: List<Game> = listOf()
+)

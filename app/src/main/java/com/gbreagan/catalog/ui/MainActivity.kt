@@ -5,8 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.compose.rememberNavController
-import com.gbreagan.catalog.ui.component.Navigation
 import com.gbreagan.catalog.ui.screen.main.MainScreen
 import com.gbreagan.catalog.ui.theme.CatalogTheme
 import dagger.hilt.android.AndroidEntryPoint

@@ -19,10 +19,13 @@ interface GameDao {
     suspend fun selectById(id: Int): Game
 
     @Query("SELECT * FROM game WHERE title LIKE '%' || :title || '%'")
-    suspend fun selectSome(title: String): Game
+    suspend fun selectByTitleLikely(title: String): List<Game>
 
     @Query("SELECT * FROM game WHERE genre = :genre")
     suspend fun selectByGenre(genre: String): List<Game>
+
+    @Query("SELECT DISTINCT genre FROM game")
+    suspend fun selectAllGenres(): List<String>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(game: Game)

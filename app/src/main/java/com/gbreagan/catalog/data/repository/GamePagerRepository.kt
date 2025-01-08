@@ -30,6 +30,9 @@ class GamePagerRepository @Inject constructor(
     ).flow
 
     override suspend fun getGameItem(id: Int): Flow<Game> = flow { emit(database.getGameDao().selectById(id)) }
+    override suspend fun findItemsByTitle(title: String): Flow<List<Game>> = flow { emit(database.getGameDao().selectByTitleLikely(title)) }
+    override suspend fun findItemsByGenre(genre: String): Flow<List<Game>> = flow { emit(database.getGameDao().selectByGenre(genre)) }
+    override suspend fun findAllGenres(): Flow<List<String>> = flow { emit(database.getGameDao().selectAllGenres()) }
 }
 
 @OptIn(ExperimentalPagingApi::class)

@@ -31,6 +31,7 @@ import com.gbreagan.catalog.ui.screen.game.UiGameState
 @Composable
 fun DetailScreen(
     itemId: Int,
+    onBack: () -> Unit = {}
 ) {
     val viewModel: DetailViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -54,19 +55,17 @@ fun DetailScreen(
 }
 @Composable
 private fun DetailScreenLayout(
-    game: Game,
+    game: Game
 ) {
     Column {
         AsyncImage(
             modifier = Modifier
-                //.background(SimpleShimmer(targetValue = 1300f, showShimmer = showShimmer.value))
                 .heightIn(min = 200.dp)
                 .fillMaxWidth(),
             model = ImageRequest.Builder(context = LocalContext.current)
                 .data(game.thumbnail)
                 .crossfade(true)
                 .build(),
-            //onSuccess = { showShimmer.value = false },
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
         )
